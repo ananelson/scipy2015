@@ -6,12 +6,18 @@
 
 == Hello I'm @ananelson
 
-* http://github.com/ananelson/talks
+* http://github.com/ananelson/scipy2015
 * Reproducibility for Software Documentation and Research
-* Environment - Docker http://docker.io
-* Workflow - Dexy http://dexy.it
+* Environment (Docker) + Workflow (Dexy)
+
+[quote, docker.com/whatisdocker]
+Docker allows you to package an application with all of its dependencies into a standardized unit for software development.
+
+[quote, dexy.it/docs/what-is-dexy.html]
+Dexy is a multi-purpose project automation tool with lots of features designed for working with documents.
+
 * http://twitter.com/ananelson
-* Find me at #SciPy and I will help you get started (thru Fri am)!
+* Find me at #SciPy2015 and I will help you get started (thru Fri am)!
 
 == Why Automate?
 
