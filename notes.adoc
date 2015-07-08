@@ -1,0 +1,139 @@
+= Dexy and Docker for Reproducible Research
+:toc: right
+:toclevels: 5
+:icons: font
+:source-highlighter: pygments
+
+== Hello I'm @ananelson
+
+* http://github.com/ananelson/talks
+* Reproducibility for Software Documentation and Research
+* Environment - Docker http://docker.io
+* Workflow - Dexy http://dexy.it
+* http://twitter.com/ananelson
+* Find me at #SciPy and I will help you get started (thru Fri am)!
+
+== Why Automate?
+
+* Make sure your docs/research are correct.
+* Automation saves you time (after initial investment).
+* Detect inefficiencies and annoyances in your install process and workflow.
+* Avoid implicit knowledge, easier to collaborate and disseminate.
+
+== Docker
+
+* Use Dockerfiles for reproducibility.
+* Rebuild early, rebuild often.
+* My snippets repo: http://github.com/ananelson/dockerfile-common
+
+{{ d['Dockerfile|idio|asciisyn']['from'] }}
+
+The ubuntu image is minimal, so we have to install some basics and do some configuration that is usually taken care of for us.
+
+Create a locale:
+
+{{ d['Dockerfile|idio|asciisyn']['localedef'] }}
+
+Set up defaults for unattended apt installs (so you don't have to type -y all the time):
+
+{{ d['Dockerfile|idio|asciisyn']['apt-defaults'] }}
+
+Install some system utilities and convenient developer tools:
+
+{{ d['Dockerfile|idio|asciisyn']['utils'] }}
+
+Install python and pip:
+
+{{ d['Dockerfile|idio|asciisyn']['python'] }}
+
+Install asciidoctor and its dependencies (including Ruby):
+
+{{ d['Dockerfile|idio|asciisyn']['asciidoctor'] }}
+
+Install dexy:
+
+{{ d['Dockerfile|idio|asciisyn']['dexy'] }}
+
+Install the software we need for our research:
+
+{{ d['Dockerfile|idio|asciisyn']['research'] }}
+
+Finally, create and activate a user so we can work interactively within our image:
+
+{{ d['Dockerfile|idio|asciisyn']['create-user'] }}
+
+{{ d['Dockerfile|idio|asciisyn']['activate-user'] }}
+
+Here's how we use this Dockerfile to build and launch an image:
+
+{{ d['run-docker.sh|asciisyn'] }}
+
+== Simpy Example
+
+{{ d['renege.py|idio|asciisyn'] }}
+
+    {{ d['renege.py|py'] | indent }}
+
+Change random seed in `renege.py` and rerun dexy...
+
+== Dexified Example
+
+We were able to run the example as-is using Dexy, but by making some changes we can make this example more flexible. A few ideas:
+
+* Put data in separate input file.
+* Save results to an output file.
+* Write prose in documents, not code files.
+
+=== Moviegoer
+
+A moviegoer tries to by a number of tickets (*num_tickets*) for a certain *movie* in a *theater*.
+
+If the movie becomes sold out, she leaves the theater. If she gets to the counter, she tries to buy a number of tickets. If not enough tickets are left, she argues with the teller and leaves.
+
+If at most one ticket is left after the moviegoer bought her tickets, the *sold out* event for this movie is triggered causing all remaining moviegoers to leave.
+
+{{ d['renege-dexy.py|idio|asciisyn']['moviegoer'] }}
+
+=== Customer Arrivals
+
+Create new *moviegoers* until the sim time reaches 120
+
+{{ d['renege-dexy.py|idio|asciisyn']['customer-arrivals'] }}
+
+=== Simulation
+
+{{ d['renege-dexy.py|idio|asciisyn']['run'] }}
+
+=== Results
+
+This simulation was run with random seed {{ d['settings.yaml'].from_yaml()['random-seed'] }}.
+
+{% for result in d['results.json'].from_json() %}
+==== {{ result['name'] }}
+
+{% if result['is-sold-out'] %}
+'{{ result['name'] }}' sold out in {{ result['sold-out-in'] }} minutes, and {{ result['queue-leavers'] }} left the queue.
+{% endif %}
+
+{% endfor %}
+
+=== Why Separate Data from Code?
+
+* decoupling == good
+* dexy manages data files for you
+* easier to access data from document templates
+* document templates are more flexible than `print` statements
+* present data in different ways and in different documents
+* easier to put data through additional pipelines (even using different languages), e.g. visualization
+
+{{ d['plot-results.py|idio|asciisyn']['load-results'] }}
+
+    {{ d['plot-results.py|py'] | indent }}
+
+image::sold-out-in.png[]
+
+== Source
+
+{{ d['dexy.yaml|asciisyn'] }}
+
+{{ d['notes.adoc|asciisyn'] }}

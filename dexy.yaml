@@ -1,0 +1,25 @@
+original:
+    - renege.py|py
+
+dexified:
+    - plot-results.py|py:
+        - renege-dexy.py|py:
+            - settings.yaml
+            - py: { add-new-files: True }
+        - py: { add-new-files: True }
+
+source:
+    - .yaml|asciisyn
+    - .sh|asciisyn
+    - .py|idio|asciisyn:
+        - idio: { ext : ".txt" }
+    - .adoc|asciisyn:
+        - asciisyn: { lexer : asciidoc }
+    - Dockerfile|idio|asciisyn:
+        - idio: { ext : ".txt" }
+        - asciisyn: { lexer : Dockerfile }
+
+notes.adoc|jinja|asciidoctor:
+    - original
+    - dexified
+    - source
