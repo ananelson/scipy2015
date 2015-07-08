@@ -52,8 +52,12 @@ RUN apt-get install \
     pip install matplotlib
 
 ### "dexy"
+RUN pip install dexy
+
+### "dev-dexy"
 WORKDIR /tmp
-RUN git clone https://github.com/dexy/dexy && \
+RUN echo "dirty2"; \
+    git clone https://github.com/dexy/dexy && \
     cd dexy && \
     pip install -e .
 
@@ -69,3 +73,7 @@ RUN useradd -m repro && \
 ENV HOME /home/repro
 USER repro
 WORKDIR /home/repro
+
+### "run"
+ADD run.sh /home/repro/run.sh
+CMD ["/bin/bash", "/home/repro/run.sh"]

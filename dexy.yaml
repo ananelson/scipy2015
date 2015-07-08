@@ -11,6 +11,8 @@ dexified:
 source:
     - .yaml|asciisyn
     - .sh|asciisyn
+    - .sh|idio|asciisyn:
+        - idio: { ext : ".txt" }
     - .py|idio|asciisyn:
         - idio: { ext : ".txt" }
     - .adoc|asciisyn:

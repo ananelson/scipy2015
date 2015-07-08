@@ -26,10 +26,17 @@ Dexy is a multi-purpose project automation tool with lots of features designed f
 * Detect inefficiencies and annoyances in your install process and workflow.
 * Avoid implicit knowledge, easier to collaborate and disseminate.
 
+== Project Model
+
+Add a `Dockerfile` and a `dexy.yaml` to the root of your project repository. Maybe a `run-docker.sh` for convenience.
+
+https://github.com/ananelson/scipy2015
+
 == Docker
 
 * Use Dockerfiles for reproducibility.
 * Rebuild early, rebuild often.
+* https://docs.docker.com/articles/dockerfile_best-practices/
 * My snippets repo: http://github.com/ananelson/dockerfile-common
 
 {{ d['Dockerfile|idio|asciisyn']['from'] }}
@@ -70,9 +77,18 @@ Finally, create and activate a user so we can work interactively within our imag
 
 {{ d['Dockerfile|idio|asciisyn']['activate-user'] }}
 
-Here's how we use this Dockerfile to build and launch an image:
+Here's how we use this Dockerfile to build an image:
 
-{{ d['run-docker.sh|asciisyn'] }}
+{{ d['run-docker.sh|idio|asciisyn']['build'] }}
+
+And here is how the image is run interactively as a container:
+
+{{ d['run-docker.sh|idio|asciisyn']['interactive'] }}
+
+This example is set up for interactive use, can also be set to generate docs automatically when you've finished developing.
+
+{{ d['run-docker.sh|idio|asciisyn']['hands-off'] }}
+{{ d['Dockerfile|idio|asciisyn']['run'] }}
 
 == Simpy Example
 
